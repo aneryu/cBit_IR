@@ -3,7 +3,6 @@
 #include <vector>
 #include "ReceiverIR.h"
 using namespace pxt;
-typedef vector<Action> vA;
 
 enum class Pins{
   P0=  3,
@@ -54,7 +53,7 @@ enum class RemoteButton {
 //% color=50 weight=19
 //% icon="\uf1eb"
 namespace Mbit_IR { 
-  map<RemoteButton, vA> actions;
+  map<RemoteButton, std::vector<Action>> actions;
   map<RemoteButton, uint32_t> lastact;
   Timer tsb; 
   uint8_t buf[32];
@@ -72,7 +71,7 @@ namespace Mbit_IR {
     actions[btn].push_back(body);
   }
 
-  void cA(vA runner){for(int i=0;i<runner.size();i++){runAction0(runner[i]);} }
+  void cA(std::vector<Action> runner){for(int i=0;i<runner.size();i++){runAction0(runner[i]);} }
 
   void onReceivable(){
     int x = rx->getData(&fmt, buf, 32 * 8);
